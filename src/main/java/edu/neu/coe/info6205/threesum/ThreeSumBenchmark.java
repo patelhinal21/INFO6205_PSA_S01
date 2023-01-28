@@ -1,6 +1,8 @@
 package edu.neu.coe.info6205.threesum;
 
+import edu.neu.coe.info6205.symbolTable.ST;
 import edu.neu.coe.info6205.util.Benchmark_Timer;
+import edu.neu.coe.info6205.util.Stopwatch;
 import edu.neu.coe.info6205.util.TimeLogger;
 import edu.neu.coe.info6205.util.Utilities;
 
@@ -17,9 +19,10 @@ public class ThreeSumBenchmark {
 
     public void runBenchmarks() {
         System.out.println("ThreeSumBenchmark: N=" + n);
-        benchmarkThreeSum("ThreeSumQuadratic", (xs) -> new ThreeSumQuadratic(xs).getTriples(), n, timeLoggersQuadratic);
-        benchmarkThreeSum("ThreeSumQuadrithmic", (xs) -> new ThreeSumQuadrithmic(xs).getTriples(), n, timeLoggersQuadrithmic);
-        benchmarkThreeSum("ThreeSumCubic", (xs) -> new ThreeSumCubic(xs).getTriples(), n, timeLoggersCubic);
+        //benchmarkThreeSum("ThreeSumQuadratic", (xs) -> new ThreeSumQuadratic(xs).getTriples(), n, timeLoggersQuadratic);
+        //benchmarkThreeSum("ThreeSumQuadrithmic", (xs) -> new ThreeSumQuadrithmic(xs).getTriples(), n, timeLoggersQuadrithmic);
+        //benchmarkThreeSum("ThreeSumCubic", (xs) -> new ThreeSumCubic(xs).getTriples(), n, timeLoggersCubic);
+        benchmarkThreeSum("ThreeSumQuadraticWithCalipers", (xs) -> new ThreeSumQuadraticWithCalipers(xs).getTriples(), n, timeLoggersQuadraticWithCallipers);
     }
 
     public static void main(String[] args) {
@@ -34,9 +37,26 @@ public class ThreeSumBenchmark {
 
     private void benchmarkThreeSum(final String description, final Consumer<int[]> function, int n, final TimeLogger[] timeLoggers) {
         if (description.equals("ThreeSumCubic") && n > 4000) return;
+        double time = 0;
+        for (int i = 0; i <= runs; i++) {
+            Stopwatch S = new Stopwatch();
+            function.accept(this.supplier.get());
+            time += S.lap();
+        }
+        double avg = time / this.runs;
+        timeLoggers[0].log(avg, n);
+        timeLoggers[1].log(avg, n);
         // FIXME
-        // END 
+        // END
+        // Benchmark_Timer t1= new Benchmark_Timer<>(description,function);
+        // for (TimeLogger timeLogger : timeLoggers) timeLogger.log(t1, n);
+        //ThreeSumQuadratic t1 = new ThreeSumQuadratic(function);
+        // Stopwatch S = new Stopwatch();
+        //S.lap();
+
+
     }
+
 
     private final static TimeLogger[] timeLoggersCubic = {
             new TimeLogger("Raw time per run (mSec): ", (time, n) -> time),
@@ -50,6 +70,12 @@ public class ThreeSumBenchmark {
             new TimeLogger("Raw time per run (mSec): ", (time, n) -> time),
             new TimeLogger("Normalized time per run (n^2): ", (time, n) -> time / n / n * 1e6)
     };
+
+    private final static TimeLogger[] timeLoggersQuadraticWithCallipers = {
+            new TimeLogger("Raw time per run (mSec): ", (time, n) -> time),
+            new TimeLogger("Normalized time per run (n^2): ", (time, n) -> time / n / n * 1e6)
+    };
+
 
     private final int runs;
     private final Supplier<int[]> supplier;

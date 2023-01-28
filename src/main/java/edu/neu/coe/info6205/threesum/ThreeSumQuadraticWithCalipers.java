@@ -50,8 +50,6 @@ public class ThreeSumQuadraticWithCalipers implements ThreeSum {
         List<Triple> triples = new ArrayList<>();
         // FIXME : use function to qualify triples and to navigate otherwise.
         // END
-
-
                 int ans =0- a[i];
                 int low = i+1;
                 int high = a.length-1;
@@ -68,9 +66,6 @@ public class ThreeSumQuadraticWithCalipers implements ThreeSum {
                        }else low++;
                     }
                 }
-
-
-
         return triples;
     }
 
