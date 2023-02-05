@@ -27,11 +27,11 @@ public class Assignment3 {
     }
 
     public static void main(String[] args) {
-        new Assignment3(100, 250, 250).runBenchmarks();
-        new Assignment3(50, 500, 500).runBenchmarks();
-        new Assignment3(20, 1000, 1000).runBenchmarks();
-        new Assignment3(10, 2000, 2000).runBenchmarks();
-        new Assignment3(5, 4000, 4000).runBenchmarks();
+        new Assignment3(100, 1000, 1000).runBenchmarks();
+        new Assignment3(50, 2000, 2000).runBenchmarks();
+        new Assignment3(20, 4000, 4000).runBenchmarks();
+        new Assignment3(10, 8000, 8000).runBenchmarks();
+        new Assignment3(5, 16000, 16000).runBenchmarks();
 
     }
 
@@ -39,10 +39,10 @@ public class Assignment3 {
         int start= -m;
          int end= m-1;
          int mid= m/2;
-        int desc = 4;
-        switch (desc) {
-            case 1:
-                description.equals("randomArray");
+
+        switch (description) {
+            case"randomArray" :
+
                 for(int i=0;i<n;i++)
                 {
                     Random r = new Random();
@@ -50,8 +50,8 @@ public class Assignment3 {
                     array[i]=no;
                 }
                 break;
-            case 2:
-                description.equals("orderedArray");
+            case "orderedArray":
+
                 for(int i=0;i<n;i++)
                 {
                     Random r = new Random();
@@ -60,8 +60,8 @@ public class Assignment3 {
                     Arrays.sort(array);
                 }
                 break;
-            case 3:
-                description.equals("partially-orderedArray");
+            case "partially-orderedArray":
+
                 for(int i=0;i<n;i++)
                 {
                     Random r = new Random();
@@ -70,8 +70,8 @@ public class Assignment3 {
                     Arrays.sort(array,0,mid);
                 }
                 break;
-            case 4:
-                description.equals("reverse-orderedArray");
+            case "reverse-orderedArray":
+
                 for(int i=0;i<n;i++)
                 {
                     Random r = new Random();
@@ -83,8 +83,9 @@ public class Assignment3 {
 
         }
         InsertionSort<Integer> insertionSort = new InsertionSort<>();
-        Benchmark_Timer object = new Benchmark_Timer<>("description",array->insertionSort.sort((Integer[]) array,0,n));
+        Benchmark_Timer object = new Benchmark_Timer<>("description",null,array->insertionSort.sort((Integer[]) array,0,n),null);
         double time = object.run(array,m);
+        System.out.println(description + " time taken for " + n + " runs " + time);
 
     }
     private final int runs;
