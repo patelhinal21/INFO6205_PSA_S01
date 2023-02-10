@@ -4,11 +4,7 @@ import java.util.Random;
 import edu.neu.coe.info6205.union_find.UF_HWQUPC;
 
 public class UFClient {
-
     private int n;
-
-
-
 
     public static int count(int n) {
         UF_HWQUPC uf = new UF_HWQUPC(n);
