@@ -18,13 +18,18 @@ public class Main {
 
     public static void main(String[] args) {
         processArgs(args);
-        System.out.println("Degree of parallelism: " + ForkJoinPool.getCommonPoolParallelism());
+        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism","4");
+        System.out.println("getParallelism=" +ForkJoinPool.commonPool().getParallelism());
+        //System.out.println("Degree of parallelism: " + ForkJoinPool.getCommonPoolParallelism());
         Random random = new Random();
-        int[] array = new int[2000000];
+        int[] array = new int[50000];
+        int[] carray = {5000,10000,15000,20000,25000,30000,35000,40000,45000,50000};
+
         ArrayList<Long> timeList = new ArrayList<>();
-        for (int j = 50; j < 100; j++) {
-            ParSort.cutoff = 10000 * (j + 1);
+        for (int j = 0; j < carray.length; j++) {
+            //ParSort.cutoff = 10000 * (j + 1);
             // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
+            ParSort.cutoff = carray[j];
             long time;
             long startTime = System.currentTimeMillis();
             for (int t = 0; t < 10; t++) {
