@@ -63,8 +63,9 @@ public class Timer {
         logger.trace("repeat: with " + n + " runs");
         // FIXME: note that the timer is running when this method is called and should still be running when it returns. by replacing the following code
         pause();
-        T array = supplier.get();
+
         for (int i = 0; i <n; i++) {
+            T array = supplier.get();
             if (preFunction != null) {
                 preFunction.apply(array);
             }
